@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Rebassed.Desktop.Views"
         mc:Ignorable="d"
-        Title="Rebassed MP3 Builder" Height="760" Width="860" MinHeight="720" MinWidth="800">
+        Title="Rebassed MP3 Builder" Height="820" Width="980" MinHeight="780" MinWidth="920"
+        Background="#111317">
     <Window.Resources>
         <views:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#E5E7EB" />
+        </Style>
     </Window.Resources>
 
     <Grid Margin="18">
@@ -18,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Files" Padding="10" Margin="0 0 0 10">
+        <Border CornerRadius="10" Background="#1F2937" Padding="12" Margin="0 0 0 12">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -29,19 +33,28 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Row="0" Margin="0 0 8 8" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Grid.Row="0" Grid.Column="1" Content="Open MP3" Padding="14 6" Command="{Binding BrowseInputCommand}"/>
+                <TextBox Grid.Row="0" Margin="0 0 8 8" Text="{Binding InputFile, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Row="0" Grid.Column="1" Content="Open MP3" Padding="16 6" Command="{Binding BrowseInputCommand}" />
 
-                <TextBox Grid.Row="1" Margin="0 0 8 0" Text="{Binding OutputFile, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Grid.Row="1" Grid.Column="1" Content="Export MP3" Padding="14 6" Command="{Binding BrowseOutputCommand}"/>
+                <TextBox Grid.Row="1" Margin="0 0 8 0" Text="{Binding OutputFile, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Row="1" Grid.Column="1" Content="Export MP3" Padding="16 6" Command="{Binding BrowseOutputCommand}" />
             </Grid>
-        </GroupBox>
+        </Border>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 10">
-            <ComboBox Width="200" Margin="0 0 8 0" ItemsSource="{Binding PresetNames}" SelectedItem="{Binding SelectedPreset}"/>
-            <Button Content="Apply Preset" Padding="12 6" Command="{Binding ApplyPresetCommand}"/>
-            <Button Content="Process" Padding="22 6" Margin="16 0 0 0" Command="{Binding ProcessCommand}"/>
-        </StackPanel>
+        <Border Grid.Row="1" CornerRadius="10" Background="#1F2937" Padding="12" Margin="0 0 0 12">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <ComboBox Width="220" Margin="0 0 8 0" ItemsSource="{Binding PresetNames}" SelectedItem="{Binding SelectedPreset}" />
+                    <Button Content="Apply Preset" Padding="12 6" Command="{Binding ApplyPresetCommand}" />
+                    <Button Content="Preview 10s" Margin="16 0 0 0" Padding="16 6" Command="{Binding PreviewCommand}" />
+                    <Button Content="Process Full Song" Margin="8 0 0 0" Padding="18 6" Command="{Binding ProcessCommand}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 6 0" Text="Generator Method:" />
+                    <ComboBox Width="150" ItemsSource="{Binding GenerationMethods}" SelectedItem="{Binding Parameters.GenerationMethod}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -49,55 +62,62 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Header="DSP Controls" Margin="0 0 6 0" Padding="12">
+            <Border Grid.Column="0" CornerRadius="10" Background="#1F2937" Padding="14" Margin="0 0 6 0">
                 <StackPanel>
+                    <TextBlock Text="DSP Controls" FontWeight="Bold" FontSize="16" Margin="0 0 0 8" />
+
                     <TextBlock Text="Target Frequency (Hz)" FontWeight="SemiBold"/>
                     <Slider x:Name="TargetSlider" Minimum="25" Maximum="45" Value="{Binding Parameters.TargetFrequencyHz}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=TargetSlider, Path=Value, StringFormat=F1}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=TargetSlider, Path=Value, StringFormat='Target {0:F1} Hz'}"/>
 
                     <TextBlock Text="Sweep" FontWeight="SemiBold"/>
                     <StackPanel Orientation="Horizontal">
-                        <Slider x:Name="SweepLow" Width="180" Minimum="30" Maximum="70" Value="{Binding Parameters.SweepLowHz}"/>
-                        <Slider x:Name="SweepHigh" Width="180" Margin="8 0 0 0" Minimum="70" Maximum="130" Value="{Binding Parameters.SweepHighHz}"/>
+                        <Slider x:Name="SweepLow" Width="205" Minimum="30" Maximum="70" Value="{Binding Parameters.SweepLowHz}"/>
+                        <Slider x:Name="SweepHigh" Width="205" Margin="8 0 0 0" Minimum="70" Maximum="130" Value="{Binding Parameters.SweepHighHz}"/>
                     </StackPanel>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=SweepLow, Path=Value, StringFormat='Low {0:F0} Hz'}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=SweepHigh, Path=Value, StringFormat='High {0:F0} Hz'}"/>
+                    <TextBlock Margin="0 0 0 2" Text="{Binding ElementName=SweepLow, Path=Value, StringFormat='Sweep Low {0:F0} Hz'}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=SweepHigh, Path=Value, StringFormat='Sweep High {0:F0} Hz'}"/>
 
                     <TextBlock Text="Wide" FontWeight="SemiBold"/>
                     <Slider x:Name="WideSlider" Minimum="0.2" Maximum="1.0" Value="{Binding Parameters.Wide}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=WideSlider, Path=Value, StringFormat=F2}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=WideSlider, Path=Value, StringFormat='Wide {0:F2}'}"/>
 
                     <TextBlock Text="Bass Level" FontWeight="SemiBold"/>
                     <Slider x:Name="BassSlider" Minimum="-18" Maximum="0" Value="{Binding Parameters.BassLevelDb}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=BassSlider, Path=Value, StringFormat='{}{0:F1} dB'}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=BassSlider, Path=Value, StringFormat='Bass {0:F1} dB'}"/>
                 </StackPanel>
-            </GroupBox>
+            </Border>
 
-            <GroupBox Header="Safety & Mix" Grid.Column="1" Margin="6 0 0 0" Padding="12">
+            <Border Grid.Column="1" CornerRadius="10" Background="#1F2937" Padding="14" Margin="6 0 0 0">
                 <StackPanel>
+                    <TextBlock Text="Safety & Output" FontWeight="Bold" FontSize="16" Margin="0 0 0 8" />
+
                     <TextBlock Text="Subsonic HPF" FontWeight="SemiBold"/>
                     <Slider x:Name="HpfSlider" Minimum="15" Maximum="40" Value="{Binding Parameters.SubsonicHpfHz}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=HpfSlider, Path=Value, StringFormat='{}{0:F1} Hz'}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=HpfSlider, Path=Value, StringFormat='HPF {0:F1} Hz'}"/>
 
                     <TextBlock Text="Dry/Wet Mix" FontWeight="SemiBold"/>
                     <Slider x:Name="MixSlider" Minimum="0" Maximum="1" Value="{Binding Parameters.DryWetMix}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=MixSlider, Path=Value, StringFormat=F2}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=MixSlider, Path=Value, StringFormat='Mix {0:F2}'}"/>
 
                     <TextBlock Text="Output Ceiling" FontWeight="SemiBold"/>
                     <Slider x:Name="CeilSlider" Minimum="-12" Maximum="-0.1" Value="{Binding Parameters.OutputCeilingDb}"/>
-                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=CeilSlider, Path=Value, StringFormat='{}{0:F1} dBFS'}"/>
+                    <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=CeilSlider, Path=Value, StringFormat='Ceiling {0:F1} dBFS'}"/>
 
-                    <TextBlock Text="Peak" FontWeight="SemiBold"/>
-                    <ProgressBar Height="18" Maximum="1" Value="{Binding Peak}"/>
-                    <TextBlock Margin="0 4 0 0" Foreground="DarkRed" FontWeight="Bold" Text="CLIPPING DETECTED" Visibility="{Binding Clipping, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock Text="Peak Meter" FontWeight="SemiBold"/>
+                    <ProgressBar Height="22" Maximum="1" Value="{Binding Peak}" />
+                    <TextBlock Margin="0 4 0 0" Text="CLIPPING DETECTED" Foreground="#F87171" FontWeight="Bold"
+                               Visibility="{Binding Clipping, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                    <Border Margin="0 12 0 0" BorderBrush="DarkOrange" BorderThickness="1" CornerRadius="5" Padding="8">
-                        <TextBlock TextWrapping="Wrap" Text="{Binding BoxWarning}" Foreground="DarkOrange"/>
+                    <Border Margin="0 12 0 0" BorderBrush="#FB923C" BorderThickness="1" CornerRadius="5" Padding="8">
+                        <TextBlock TextWrapping="Wrap" Foreground="#FDBA74" Text="{Binding BoxWarning}" />
                     </Border>
                 </StackPanel>
-            </GroupBox>
+            </Border>
         </Grid>
 
-        <TextBlock Grid.Row="3" Margin="0 10 0 0" Text="{Binding Status}" FontWeight="SemiBold"/>
+        <Border Grid.Row="3" CornerRadius="8" Background="#1F2937" Padding="10" Margin="0 10 0 0">
+            <TextBlock Text="{Binding Status}" FontWeight="SemiBold" />
+        </Border>
     </Grid>
 </Window>

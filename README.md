@@ -19,9 +19,69 @@ Rebassed.sln
 │     ├─ Views/           # Convertidores UI
 │     ├─ Services/        # Ruta de preview corta
 │     └─ MainWindow.xaml  # Ventana principal y controles
+├─ scripts/
+│  └─ run_windows.bat     # Atajo para restore/build/run
 └─ tests/
    └─ Rebassed.Core.Tests/
 ```
+
+## Instalación y ejecución en tu PC (Windows)
+
+### Opción A (recomendada): usar Visual Studio
+
+1. Instala **Visual Studio 2022** con la carga de trabajo:
+   - `Desarrollo de escritorio con .NET`.
+2. Asegúrate de tener **.NET 8 SDK** instalado.
+3. Descarga/clona este repo.
+4. Abre `Rebassed.sln` en Visual Studio.
+5. Selecciona el proyecto de inicio: `Rebassed.Desktop`.
+6. Pulsa `F5` (Debug) o `Ctrl+F5` (sin depuración).
+
+### Opción B: por terminal (PowerShell/CMD)
+
+1. Instala .NET 8 SDK.
+2. En la carpeta del repo, ejecuta:
+
+```bash
+dotnet restore Rebassed.sln
+dotnet build Rebassed.sln -c Release
+dotnet run --project src/Rebassed.Desktop/Rebassed.Desktop.csproj -c Release
+```
+
+### Opción C: script listo
+
+En CMD:
+
+```bat
+scripts\run_windows.bat
+```
+
+## ¿Cómo usar la app? (paso a paso)
+
+1. Clic en **Open MP3** y selecciona tu canción.
+2. Clic en **Export MP3** y elige nombre de salida.
+3. Elige preset:
+   - `Safe 30Hz` (más conservador),
+   - `Balanced 33Hz` (recomendado),
+   - `Deep 35Hz` (más agresivo).
+4. Ajusta controles si quieres:
+   - `Target Frequency (Hz)` (30–35 típico; 25–45 avanzado),
+   - `Sweep` (zona de detección de graves),
+   - `Wide`,
+   - `Bass Level`,
+   - `Subsonic HPF`,
+   - `Dry/Wet Mix`,
+   - `Output Ceiling`.
+5. Pulsa **Process**.
+6. Revisa:
+   - medidor `Peak`,
+   - alerta de clipping.
+7. Si aparece clipping:
+   - baja `Bass Level`,
+   - baja `Dry/Wet Mix`,
+   - o reduce `Output Ceiling` (más negativo).
+
+⚠️ Seguridad: por debajo de la frecuencia de sintonía de una caja portada aumenta el riesgo de excursión del subwoofer.
 
 ## Flujo DSP implementado
 
@@ -36,35 +96,6 @@ Rebassed.sln
 6. Mezcla con original (`Dry/Wet Mix`).
 7. Protección: `Subsonic HPF` + limitador suave con `Output Ceiling`.
 8. Exportación MP3.
-
-## Controles UI
-
-- `Target Frequency (Hz)` (25-45 avanzado, objetivo típico 30-35).
-- `Sweep` (banda de detección low/high).
-- `Wide`.
-- `Bass Level`.
-- `Subsonic HPF`.
-- `Dry/Wet Mix`.
-- `Output Ceiling`.
-
-También incluye:
-- medidor `Peak` y alerta de clipping,
-- advertencia de excursión por debajo de sintonía de caja portada,
-- presets seguros por defecto.
-
-## Build / ejecución (Windows)
-
-Requisitos:
-- .NET 8 SDK
-- Windows 10/11
-
-Comandos:
-
-```bash
-dotnet restore Rebassed.sln
-dotnet build Rebassed.sln -c Release
-dotnet run --project src/Rebassed.Desktop/Rebassed.Desktop.csproj -c Release
-```
 
 ## Casos de prueba básicos
 
