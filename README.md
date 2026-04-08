@@ -37,6 +37,16 @@ Rebassed.sln
 5. Selecciona el proyecto de inicio: `Rebassed.Desktop`.
 6. Pulsa `F5` (Debug) o `Ctrl+F5` (sin depuración).
 
+
+### Si Visual Studio muestra "biblioteca de clases no se puede iniciar"
+
+Ese mensaje aparece cuando el proyecto de inicio quedó en `Rebassed.Core` (librería).
+
+Solución:
+1. En el explorador de soluciones, clic derecho en `Rebassed.Desktop`.
+2. Selecciona **Establecer como proyecto de inicio**.
+3. Ejecuta con `F5`.
+
 ### Opción B: por terminal (PowerShell/CMD)
 
 1. Instala .NET 8 SDK.
