@@ -1,3 +1,4 @@
+using NAudio.Utils;
 using NAudio.Wave;
 using Rebassed.Core.Models;
 
@@ -73,7 +74,7 @@ public sealed class NaudioMp3Codec : IAudioCodec
             cancellationToken.ThrowIfCancellationRequested();
             var waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(buffer.SampleRate, buffer.ChannelCount);
             using var temp = new MemoryStream();
-            using (var writer = new WaveFileWriter(temp, waveFormat))
+            using (var writer = new WaveFileWriter(new IgnoreDisposeStream(temp), waveFormat))
             {
                 writer.WriteSamples(interleaved, 0, interleaved.Length);
             }
