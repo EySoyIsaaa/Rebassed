@@ -66,6 +66,17 @@ En CMD:
 scripts\run_windows.bat
 ```
 
+### Errores comunes al compilar
+
+- **NU1201 en `Rebassed.Core.Tests`**: asegúrate de usar la versión actual del repo (el proyecto de tests debe apuntar a `net8.0-windows`).
+- Si persiste, borra carpetas `bin`/`obj` y ejecuta:
+
+```bash
+dotnet clean Rebassed.sln
+dotnet restore Rebassed.sln
+dotnet build Rebassed.sln -c Release
+```
+
 ## ¿Cómo usar la app? (paso a paso)
 
 1. Clic en **Open MP3** y selecciona tu canción.
