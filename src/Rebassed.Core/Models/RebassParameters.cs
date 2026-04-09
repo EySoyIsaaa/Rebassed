@@ -16,11 +16,11 @@ public sealed class RebassParameters : INotifyPropertyChanged
     private double sweepLowHz = 40;
     private double sweepHighHz = 90;
     private double wide = 0.65;
-    private double bassLevelDb = -6;
+    private double bassLevelDb = 3;
     private double subsonicHpfHz = 25;
     private double dryWetMix = 0.4;
     private double outputCeilingDb = -1;
-    private double gateThresholdDb = -42;
+    private double gateThresholdDb = -54;
     private SubGenerationMethod generationMethod = SubGenerationMethod.PeriodTracker;
 
     public event PropertyChangedEventHandler? PropertyChanged;

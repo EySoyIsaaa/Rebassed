@@ -83,7 +83,7 @@
                     <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=WideSlider, Path=Value, StringFormat='Wide {0:F2}'}"/>
 
                     <TextBlock Text="Bass Level" FontWeight="SemiBold"/>
-                    <Slider x:Name="BassSlider" Minimum="-18" Maximum="0" Value="{Binding Parameters.BassLevelDb}"/>
+                    <Slider x:Name="BassSlider" Minimum="-24" Maximum="12" Value="{Binding Parameters.BassLevelDb}"/>
                     <TextBlock Margin="0 0 0 8" Text="{Binding ElementName=BassSlider, Path=Value, StringFormat='Bass {0:F1} dB'}"/>
                 </StackPanel>
             </Border>

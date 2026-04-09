@@ -15,6 +15,9 @@ public static class SafetyValidator
         if (p.SubsonicHpfHz is < 15 or > 40)
             throw new ArgumentOutOfRangeException(nameof(p.SubsonicHpfHz), "Subsonic HPF must stay in 15-40 Hz.");
 
+        if (p.BassLevelDb is < -24 or > 12)
+            throw new ArgumentOutOfRangeException(nameof(p.BassLevelDb), "Bass Level must stay in -24 to +12 dB.");
+
         if (p.OutputCeilingDb is > -0.1 or < -12)
             throw new ArgumentOutOfRangeException(nameof(p.OutputCeilingDb), "Output ceiling must stay in -12 to -0.1 dBFS.");
     }

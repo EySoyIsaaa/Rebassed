@@ -77,6 +77,14 @@ dotnet restore Rebassed.sln
 dotnet build Rebassed.sln -c Release
 ```
 
+
+### Si no escuchas rebass en la salida
+
+1. Sube `Bass Level` (ahora permite hasta `+12 dB`).
+2. Usa preset `Balanced 33Hz` o `Deep 35Hz`.
+3. Sube `Dry/Wet Mix` a 0.55-0.70 para prueba rápida.
+4. Verifica que la canción tenga graves en 35-100 Hz (si no hay graves de entrada, no hay buen tracking).
+
 ## ¿Cómo usar la app? (paso a paso)
 
 1. Clic en **Open MP3** y selecciona tu canción.
